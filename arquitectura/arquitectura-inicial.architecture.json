@@ -1,0 +1,392 @@
+{
+  "schema_version": 1,
+  "diagram_type": "architecture",
+  "meta": {
+    "title": "Arquitectura inicial - Marketplace",
+    "output": "arquitectura-inicial.html",
+    "quality_profile": "showcase",
+    "viewBox": [
+      1340,
+      940
+    ]
+  },
+  "components": [
+    {
+      "id": "cliente",
+      "type": "external",
+      "label": "Cliente",
+      "pos": [
+        150,
+        70
+      ],
+      "size": [
+        140,
+        64
+      ]
+    },
+    {
+      "id": "seller",
+      "type": "external",
+      "label": "Seller",
+      "pos": [
+        350,
+        70
+      ],
+      "size": [
+        140,
+        64
+      ]
+    },
+    {
+      "id": "admin",
+      "type": "external",
+      "label": "Administrador",
+      "pos": [
+        550,
+        70
+      ],
+      "size": [
+        160,
+        64
+      ]
+    },
+    {
+      "id": "webapp",
+      "type": "frontend",
+      "label": "Aplicación Web",
+      "pos": [
+        210,
+        240
+      ],
+      "size": [
+        180,
+        64
+      ]
+    },
+    {
+      "id": "apirest",
+      "type": "backend",
+      "label": "API REST",
+      "pos": [
+        500,
+        240
+      ],
+      "size": [
+        170,
+        64
+      ]
+    },
+    {
+      "id": "usuarios",
+      "type": "backend",
+      "label": "Usuarios",
+      "pos": [
+        90,
+        420
+      ],
+      "size": [
+        150,
+        64
+      ]
+    },
+    {
+      "id": "sellers",
+      "type": "backend",
+      "label": "Sellers",
+      "pos": [
+        280,
+        420
+      ],
+      "size": [
+        150,
+        64
+      ]
+    },
+    {
+      "id": "catalogo",
+      "type": "backend",
+      "label": "Catálogo",
+      "pos": [
+        470,
+        420
+      ],
+      "size": [
+        150,
+        64
+      ]
+    },
+    {
+      "id": "carrito",
+      "type": "backend",
+      "label": "Carrito",
+      "pos": [
+        660,
+        420
+      ],
+      "size": [
+        150,
+        64
+      ]
+    },
+    {
+      "id": "pedidos",
+      "type": "backend",
+      "label": "Pedidos",
+      "pos": [
+        850,
+        420
+      ],
+      "size": [
+        150,
+        64
+      ]
+    },
+    {
+      "id": "bd",
+      "type": "database",
+      "label": "Base de datos",
+      "pos": [
+        445,
+        600
+      ],
+      "size": [
+        200,
+        70
+      ]
+    },
+    {
+      "id": "pago",
+      "type": "external",
+      "label": "Pasarela de pago",
+      "pos": [
+        580,
+        780
+      ],
+      "size": [
+        150,
+        64
+      ]
+    },
+    {
+      "id": "erp",
+      "type": "external",
+      "label": "ERP",
+      "pos": [
+        850,
+        780
+      ],
+      "size": [
+        150,
+        64
+      ]
+    },
+    {
+      "id": "envio",
+      "type": "external",
+      "label": "Servicio de envío",
+      "pos": [
+        1120,
+        780
+      ],
+      "size": [
+        150,
+        64
+      ]
+    }
+  ],
+  "boundaries": [
+    {
+      "kind": "region",
+      "label": "PRESENTACIÓN",
+      "wraps": [
+        "webapp",
+        "apirest"
+      ]
+    },
+    {
+      "kind": "region",
+      "label": "LÓGICA DE NEGOCIO",
+      "wraps": [
+        "usuarios",
+        "sellers",
+        "catalogo",
+        "carrito",
+        "pedidos"
+      ]
+    },
+    {
+      "kind": "region",
+      "label": "DATOS",
+      "wraps": [
+        "bd"
+      ]
+    },
+    {
+      "kind": "region",
+      "label": "SISTEMAS EXTERNOS",
+      "wraps": [
+        "pago",
+        "erp",
+        "envio"
+      ]
+    }
+  ],
+  "connections": [
+    {
+      "id": "cliente-webapp",
+      "from": "cliente",
+      "to": "webapp",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "seller-webapp",
+      "from": "seller",
+      "to": "webapp",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "admin-webapp",
+      "from": "admin",
+      "to": "webapp",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "webapp-apirest",
+      "from": "webapp",
+      "to": "apirest",
+      "label": "HTTP",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "api-usuarios",
+      "from": "apirest",
+      "to": "usuarios",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "api-sellers",
+      "from": "apirest",
+      "to": "sellers",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "api-catalogo",
+      "from": "apirest",
+      "to": "catalogo",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "api-carrito",
+      "from": "apirest",
+      "to": "carrito",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "api-pedidos",
+      "from": "apirest",
+      "to": "pedidos",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "usuarios-bd",
+      "from": "usuarios",
+      "to": "bd",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "sellers-bd",
+      "from": "sellers",
+      "to": "bd",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "catalogo-bd",
+      "from": "catalogo",
+      "to": "bd",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "carrito-bd",
+      "from": "carrito",
+      "to": "bd",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "pedidos-bd",
+      "from": "pedidos",
+      "to": "bd",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "pedidos-pago",
+      "from": "pedidos",
+      "to": "pago",
+      "label": "cobro",
+      "variant": "dashed",
+      "fromSide": "bottom",
+      "toSide": "top",
+      "labelSegment": 2
+    },
+    {
+      "id": "pedidos-erp",
+      "from": "pedidos",
+      "to": "erp",
+      "label": "sincronización",
+      "variant": "dashed",
+      "fromSide": "bottom",
+      "toSide": "top",
+      "labelAt": [
+        925,
+        705
+      ]
+    },
+    {
+      "id": "pedidos-envio",
+      "from": "pedidos",
+      "to": "envio",
+      "label": "despacho",
+      "variant": "dashed",
+      "fromSide": "bottom",
+      "toSide": "top",
+      "labelSegment": 2
+    }
+  ],
+  "cards": [
+    {
+      "dot": "cyan",
+      "title": "Presentación",
+      "items": [
+        "Aplicación Web y API REST habilitan la interacción del usuario con el sistema"
+      ]
+    },
+    {
+      "dot": "emerald",
+      "title": "Lógica de negocio",
+      "items": [
+        "Usuarios, Sellers, Catálogo, Carrito y Pedidos implementan las funcionalidades principales"
+      ]
+    },
+    {
+      "dot": "violet",
+      "title": "Datos e integraciones",
+      "items": [
+        "La base de datos centraliza la información del sistema",
+        "Pedidos se integra con la pasarela de pago y el servicio de envío"
+      ]
+    }
+  ]
+}
