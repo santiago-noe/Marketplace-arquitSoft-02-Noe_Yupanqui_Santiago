@@ -38,6 +38,10 @@
 
 ## Diagrama de arquitectura (estructura global)
 
+![Monolito modular en capas — Marketplace Backend](./img/monolito-modular-en-capas.png)
+
+Versión en Mermaid (incluye además la caché Redis del ADR-003):
+
 ```mermaid
 flowchart TB
     subgraph Actores
