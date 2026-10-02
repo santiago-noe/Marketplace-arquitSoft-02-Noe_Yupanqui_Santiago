@@ -1,0 +1,346 @@
+{
+  "schema_version": 1,
+  "diagram_type": "architecture",
+  "meta": {
+    "title": "Clean Architecture - Marketplace Web (Angular 18)",
+    "output": "enfoque-arquitectonico.html",
+    "quality_profile": "showcase",
+    "viewBox": [
+      1350,
+      800
+    ],
+    "legend": {
+      "mode": "auto",
+      "entries": {
+        "external": {
+          "label": "Actor / sistema externo"
+        },
+        "frontend": {
+          "label": "Presentación"
+        },
+        "backend": {
+          "label": "Aplicación (casos de uso)"
+        },
+        "security": {
+          "label": "Dominio"
+        },
+        "messagebus": {
+          "label": "Infraestructura (adaptadores)"
+        },
+        "cloud": {
+          "label": "Raíz de composición"
+        }
+      }
+    }
+  },
+  "components": [
+    {
+      "id": "usuario",
+      "type": "external",
+      "label": "Usuario",
+      "sublabel": "Cliente · navegador",
+      "pos": [
+        30,
+        250
+      ],
+      "size": [
+        130,
+        64
+      ]
+    },
+    {
+      "id": "catalogo-cmp",
+      "type": "frontend",
+      "label": "CatalogoComponent",
+      "sublabel": "lista y filtra productos",
+      "pos": [
+        230,
+        170
+      ],
+      "size": [
+        190,
+        64
+      ]
+    },
+    {
+      "id": "carrito-cmp",
+      "type": "frontend",
+      "label": "CarritoComponent",
+      "sublabel": "resume y confirma compra",
+      "pos": [
+        230,
+        340
+      ],
+      "size": [
+        190,
+        64
+      ]
+    },
+    {
+      "id": "estado-carrito",
+      "type": "frontend",
+      "label": "EstadoCarrito",
+      "sublabel": "signals · sin reglas",
+      "pos": [
+        230,
+        510
+      ],
+      "size": [
+        190,
+        64
+      ]
+    },
+    {
+      "id": "uc-consultar",
+      "type": "backend",
+      "label": "ConsultarCatalogo",
+      "sublabel": "caso de uso · ejecutar()",
+      "pos": [
+        500,
+        100
+      ],
+      "size": [
+        200,
+        64
+      ]
+    },
+    {
+      "id": "uc-agregar",
+      "type": "backend",
+      "label": "AgregarAlCarrito",
+      "sublabel": "caso de uso · ejecutar()",
+      "pos": [
+        500,
+        240
+      ],
+      "size": [
+        200,
+        64
+      ]
+    },
+    {
+      "id": "uc-registrar",
+      "type": "backend",
+      "label": "RegistrarCompra",
+      "sublabel": "caso de uso · ejecutar()",
+      "pos": [
+        500,
+        380
+      ],
+      "size": [
+        200,
+        64
+      ]
+    },
+    {
+      "id": "modelos",
+      "type": "security",
+      "label": "Modelos",
+      "sublabel": "Producto · Carrito · Pedido · precios.ts",
+      "tag": "TypeScript puro",
+      "pos": [
+        790,
+        170
+      ],
+      "size": [
+        220,
+        72
+      ]
+    },
+    {
+      "id": "contratos",
+      "type": "security",
+      "label": "Contratos (puertos)",
+      "sublabel": "Repositorios · Pagos · Notificador",
+      "tag": "interfaces",
+      "pos": [
+        790,
+        380
+      ],
+      "size": [
+        220,
+        72
+      ]
+    },
+    {
+      "id": "adaptadores",
+      "type": "messagebus",
+      "label": "Adaptadores",
+      "sublabel": "Memoria · Http · Niubiz · WhatsApp",
+      "tag": "intercambiables",
+      "pos": [
+        1110,
+        380
+      ],
+      "size": [
+        210,
+        72
+      ]
+    },
+    {
+      "id": "api",
+      "type": "external",
+      "label": "Marketplace API REST",
+      "sublabel": "Node.js · monolito modular",
+      "pos": [
+        1110,
+        170
+      ],
+      "size": [
+        210,
+        72
+      ]
+    },
+    {
+      "id": "app-config",
+      "type": "cloud",
+      "label": "app.config.ts",
+      "sublabel": "useFactory + InjectionToken",
+      "tag": "raíz de composición",
+      "pos": [
+        790,
+        610
+      ],
+      "size": [
+        220,
+        72
+      ]
+    }
+  ],
+  "boundaries": [
+    {
+      "kind": "region",
+      "label": "PRESENTACIÓN",
+      "wraps": [
+        "catalogo-cmp",
+        "carrito-cmp",
+        "estado-carrito"
+      ]
+    },
+    {
+      "kind": "region",
+      "label": "APLICACIÓN",
+      "wraps": [
+        "uc-consultar",
+        "uc-agregar",
+        "uc-registrar"
+      ]
+    },
+    {
+      "kind": "region",
+      "label": "DOMINIO",
+      "wraps": [
+        "modelos",
+        "contratos"
+      ]
+    },
+    {
+      "kind": "region",
+      "label": "INFRAESTRUCTURA",
+      "wraps": [
+        "adaptadores"
+      ]
+    }
+  ],
+  "connections": [
+    {
+      "id": "navega",
+      "from": "usuario",
+      "to": "catalogo-cmp",
+      "label": "navega",
+      "variant": "emphasis"
+    },
+    {
+      "id": "invoca-consultar",
+      "from": "catalogo-cmp",
+      "to": "uc-consultar",
+      "label": "invoca"
+    },
+    {
+      "id": "invoca-agregar",
+      "from": "catalogo-cmp",
+      "to": "uc-agregar"
+    },
+    {
+      "id": "invoca-registrar",
+      "from": "carrito-cmp",
+      "to": "uc-registrar",
+      "label": "invoca"
+    },
+    {
+      "id": "estado",
+      "from": "carrito-cmp",
+      "to": "estado-carrito",
+      "label": "signals",
+      "fromSide": "bottom",
+      "toSide": "top",
+      "labelAt": [
+        325,
+        457
+      ]
+    },
+    {
+      "id": "agregar-modelos",
+      "from": "uc-agregar",
+      "to": "modelos",
+      "label": "reglas",
+      "variant": "dashed"
+    },
+    {
+      "id": "registrar-contratos",
+      "from": "uc-registrar",
+      "to": "contratos",
+      "label": "import",
+      "variant": "dashed"
+    },
+    {
+      "id": "implementa",
+      "from": "adaptadores",
+      "to": "contratos",
+      "label": "implementa",
+      "variant": "dashed"
+    },
+    {
+      "id": "http",
+      "from": "adaptadores",
+      "to": "api",
+      "label": "HTTP · JSON",
+      "fromSide": "top",
+      "toSide": "bottom"
+    },
+    {
+      "id": "registra",
+      "from": "app-config",
+      "to": "adaptadores",
+      "label": "registra",
+      "variant": "dashed",
+      "fromSide": "right",
+      "toSide": "bottom"
+    }
+  ],
+  "cards": [
+    {
+      "dot": "amber",
+      "title": "Regla de dependencia",
+      "items": [
+        "Las dependencias de código apuntan siempre hacia el dominio",
+        "El dominio no importa Angular, HttpClient ni RxJS"
+      ]
+    },
+    {
+      "dot": "violet",
+      "title": "Inversión de dependencias",
+      "items": [
+        "Los contratos viven en el dominio",
+        "Los adaptadores los implementan y son intercambiables"
+      ]
+    },
+    {
+      "dot": "slate",
+      "title": "Raíz de composición",
+      "items": [
+        "app.config.ts es el único archivo que elige qué adaptador cumple cada contrato"
+      ]
+    }
+  ]
+}
